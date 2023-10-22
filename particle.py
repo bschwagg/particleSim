@@ -1,6 +1,10 @@
 
 from random import randint
 import math
+
+
+# F=ma  however, play with acceleration dropoff m/s^gravity_exponent
+gravity_exponent = 1.5
     
 # Particle class
 class Particle:
@@ -35,7 +39,7 @@ class Particle:
         dy = other.y - self.y
         distance = math.sqrt(dx**2 + dy**2)
         if distance == 0: distance = 0.00000001
-        force = (self.mass * other.mass) / (distance**2)
+        force = (self.mass * other.mass) / (distance**gravity_exponent)
         angle = math.atan2(dy, dx)
         self.vx += force * math.cos(angle) / self.mass
         self.vy += force * math.sin(angle) / self.mass

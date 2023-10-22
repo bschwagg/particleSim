@@ -5,7 +5,7 @@ from particle import Particle
 
 # Screen dimensions
 width, height = 1200, 800
-trail_intensity = 0.6 # [0.0 -> 1.0]
+trail_intensity = 0.95 # [0.0 -> 1.0]
 
 # list of particles
 particles = []
@@ -55,6 +55,7 @@ def main_loop():
                 particles.remove(  particle )
                 continue
             pygame.draw.circle(screen, particle.color, (int(particle.x), int(particle.y),), particle.radius)
+            pygame.draw.circle(screen, (255,255,100,50), (int(particle.x + randint(-2,2) + particle.radius/3), int(particle.y)+randint(-3,3) , ), particle.radius/2)
                 
 
         # Update the screen
