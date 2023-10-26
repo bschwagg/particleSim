@@ -113,7 +113,9 @@ def speed_limit(p1, vx_max, vy_max):
     if p1.vx < -vx_max: p1.vx = -vx_max
     if p1.vy < -vy_max: p1.vy = -vy_max
 
+
 def set_color_by_speed(p1):
+    # lerp map is:
     # -20 -> 255
     # 0 -> 0
     # 20 -> 255
@@ -126,5 +128,5 @@ def set_color_by_speed(p1):
     g = min(g,255)
     g = max(0, g)
     
-    b = 100 #p1.mass % 255
+    b = 100 
     p1.set_color_direct(r,g,b)

@@ -43,7 +43,7 @@ def main_loop():
         pygame.display.update()
 
 
-def main():
+def parse_arg_to_config_func():
     funcs = inspect.getmembers(configs, inspect.isfunction)
     if len(sys.argv) != 2:
         print("Please provide one of the following scenarios:")
@@ -62,6 +62,11 @@ def main():
     else:
         print('invalid scenario given')
         sys.exit()
+    return setup_func
+
+def main():
+
+    setup_func = parse_arg_to_config_func()
 
     # Initialize Pygame
     pygame.init()
@@ -78,7 +83,6 @@ def main():
 
     # Quit Pygame
     pygame.quit()
-    sys.exit()
 
 if __name__ == "__main__":
     main()

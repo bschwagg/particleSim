@@ -71,10 +71,12 @@ class PyGrid:
         cell = self.grid[key]
         cell.remove(particle)
 
+
     def add_physics(self, dict_obj):
         print(f'adding physics: {dict_obj["name"]}')
         self.physics.append( dict_obj )
         #TODO: check all needed keys are present
+
 
     def apply_physics(self):
         for cell in self.grid.items():
@@ -114,11 +116,10 @@ class PyGrid:
                     particle_list.remove(particle)
                     self.add_particle(particle)
 
-        # for key, particle in remove_list:
-        #     self.remove(key, particle)
 
 if __name__ == "__main__":
 
+    print("View the grid for testing")
     pygame.init()
     screen = pygame.display.set_mode( (1024, 512) )
 
