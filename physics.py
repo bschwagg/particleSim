@@ -1,10 +1,9 @@
 import math
 
-def gravity(p1, p2):
+def gravity(p1, p2, gravity_exponent):
     if p1 == p2: return
 
     # F=ma  however, play with acceleration dropoff m/s^gravity_exponent
-    gravity_exponent = 1.5
 
     dx = p2.x - p1.x
     dy = p2.y - p1.y
@@ -79,20 +78,53 @@ def downforce(p1, gravity):
 
 def bounce(p1, width, height, coef_fric=1.0):
     # pin-ball the objects in our box
-    if p1.x + p1.radius >= float(width) or p1.x - p1.radius < 0.0:
+    if p1.x + p1.radius >= float(width):
         p1.vx *= -coef_fric
-    if p1.y + p1.radius >= float(height) or p1.y - p1.radius < 0:
+        p1.x = width - p1.radius
+    elif p1.x - p1.radius < 0.0:
+        p1.vx *= -coef_fric
+        p1.x = p1.radius
+
+    if p1.y + p1.radius >= float(height):
         p1.vy *= -coef_fric
+        p1.y = height - p1.radius
+    elif p1.y - p1.radius < 0:
+        p1.vy *= -coef_fric
+        p1.y = p1.radius
 
 
 def portal(p1, width, height):
     # pin-ball the objects in our box
     if p1.x > width:
-        p1.x += width
+        p1.x -= (width + abs(p1.vx))
     elif p1.x < 0:
-        p1.x -= width
+        p1.x += width + abs(p1.vx)
 
     if p1.y > height:
-        p1.y += height
+        p1.y -= (height  + abs(p1.vy))
     elif p1.y < 0:
-        p1.y -= height
+        p1.y += height  + abs(p1.vy)
+
+
+def speed_limit(p1, vx_max, vy_max):
+    if p1.vx > vx_max: p1.vx = vx_max
+    if p1.vy > vy_max: p1.vy = vy_max
+
+    if p1.vx < -vx_max: p1.vx = -vx_max
+    if p1.vy < -vy_max: p1.vy = -vy_max
+
+def set_color_by_speed(p1):
+    # -20 -> 255
+    # 0 -> 0
+    # 20 -> 255
+
+    r =  abs(p1.vx)/20.0*255.0 
+    r = min(r,255)
+    r = max(0, r)
+
+    g =  abs(p1.vy)/20.0*255.0 
+    g = min(g,255)
+    g = max(0, g)
+    
+    b = 100 #p1.mass % 255
+    p1.set_color_direct(r,g,b)
