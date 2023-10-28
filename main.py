@@ -28,7 +28,7 @@ def main_loop():
 
         dt = clock.tick()
         dt /= 75 # slow the sim down (found by trail and error)
-
+        
         # Apply physics and then update the particles location
         grid.apply_physics()
         grid.update(dt)

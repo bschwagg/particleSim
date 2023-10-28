@@ -1,6 +1,7 @@
 import pygame
 import sys
 import time
+import itertools
 from particle import Particle
 
 
@@ -87,12 +88,12 @@ class PyGrid:
                 if physics['check_neighbor_cells'] == True:
                     particle_list = self.get_neighboring_cell_particles(cell)
                 # run physics
-                for particle in particle_list:
-                    if not physics['interact_with_other_particles']:
+                if not physics['interact_with_other_particles']:
+                    for particle in particle_list:
                         physics['function']( particle, *physics['arguments'] )
-                    else:
-                        for other in particle_list:
-                            physics['function']( particle, other, *physics['arguments'] )
+                else:
+                    for particle, other in list(itertools.combinations(particle_list, 2)):
+                        physics['function']( particle, other, *physics['arguments'] )
 
 
     def update(self, dt):
